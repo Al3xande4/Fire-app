@@ -7,10 +7,8 @@
         android:enabled="true"
         />
 
-    <item android:id="@+id/nav_news"
+    <item android:id="@+id/nav_news2"
         android:title="News"
-        android:enabled="true"
-        android:icon="@drawable/ic_android_black_24dp"/>
-
+        android:icon="@drawable/icons8_news_50___"/>
 
 </menu>
