@@ -7,27 +7,116 @@
         android:id="@+id/drawerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-
+            android:orientation="vertical"
+            android:id="@+id/body_container"
+            >
             <fragment
                 android:id="@+id/myNavHostFragment"
                 android:name="androidx.navigation.fragment.NavHostFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:navGraph="@navigation/navigation"
-                app:defaultNavHost="true" />
-        </LinearLayout>
+                />
+              <com.google.android.material.bottomnavigation.BottomNavigationView
+                  android:id="@+id/bottom_navigation"
+                  style="@style/Widget.MaterialComponents.BottomNavigationView.PrimarySurface"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_margin="15dp"
+                  android:layout_gravity="bottom"
+                  app:menu="@menu/item_menu"
+                  android:background="@drawable/round_corner"
+                  app:itemIconSize="20dp"
+                  app:itemIconTint="@drawable/item_selector"
+                  app:itemTextColor="@color/black"
+                  app:labelVisibilityMode="labeled"
+                  android:visibility="invisible"/>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.ismaeldivita.chipnavigation.ChipNavigationBar
+                android:id="@+id/bottom_navigation2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cnb_menuResource="@menu/item_menu"
+                android:layout_gravity="bottom"
+                android:background="@color/white"
+                app:cnb_iconSize="35dp"
+                android:elevation="8dp"
+                android:visibility="invisible"
+                >
+            </com.ismaeldivita.chipnavigation.ChipNavigationBar>
+            <com.gauravk.bubblenavigation.BubbleNavigationConstraintView
+                android:id="@+id/bottom_navigation3"
+                android:layout_gravity="bottom"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@drawable/round_corner"
+                android:elevation="4dp"
+                android:padding="12dp"
+                android:layout_margin="15dp"
+                app:bnc_mode="spread"
+                android:visibility="visible">
+
+                <com.gauravk.bubblenavigation.BubbleToggleView
+                    android:id="@+id/c_item_news"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    app:bt_active="true"
+                    app:bt_colorActive="@color/blue"
+                    app:bt_colorInactive="@color/black"
+                    app:bt_icon="@drawable/ic_news"
+                    app:bt_shape="@drawable/news_shape"
+                    app:bt_title="News"
+                    app:bt_padding="8dp"
+                    app:bt_titlePadding="8dp"
+                    app:bt_badgeBackgroundColor="@color/blue"
+                    />
+                <com.gauravk.bubblenavigation.BubbleToggleView
+                    android:id="@+id/c_item_fire"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    app:bt_active="true"
+                    app:bt_colorActive="@color/red"
+                    app:bt_colorInactive="@color/black"
+                    app:bt_icon="@drawable/ic_fire"
+                    app:bt_padding="8dp"
+                    app:bt_shape="@drawable/fire_shape"
+                    app:bt_title="Fire"
+                    app:bt_titlePadding="8dp" />
+                <com.gauravk.bubblenavigation.BubbleToggleView
+                    android:id="@+id/c_item_account"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    app:bt_active="true"
+                    app:bt_colorActive="@color/light_green_700"
+                    app:bt_colorInactive="@color/black"
+                    app:bt_icon="@drawable/ic_acount"
+                    app:bt_padding="8dp"
+                    app:bt_shape="@drawable/account_shape"
+                    app:bt_title="Account"
+                    app:bt_titlePadding="8dp" />
+
+                <!-- Add more child items here - max upto 5 -->
+
+            </com.gauravk.bubblenavigation.BubbleNavigationConstraintView>
+        </FrameLayout>
+
 
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/navView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            app:menu="@menu/navdrawer_menu" />
+            app:menu="@menu/navdrawer_menu"
+            app:headerLayout="@layout/nav_header"
+            />
     </androidx.drawerlayout.widget.DrawerLayout>
 
 </layout>

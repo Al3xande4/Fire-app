@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item android:id="@+id/nav_news"
+        android:title="News"
+        android:icon="@drawable/ic_news"
+        app:showAsAction="ifRoom"
+        app:cnb_iconColor="@color/blue"
+        />
 
     <item android:id="@+id/nav_fire"
         android:icon="@drawable/ic_fire"
         android:title="Fire"
-        android:enabled="true"
+        app:showAsAction="ifRoom"
+        app:cnb_iconColor="@color/red"
         />
 
-    <item android:id="@+id/nav_news2"
-        android:title="News"
-        android:icon="@drawable/icons8_news_50___"/>
+    <item android:id="@+id/nav_account"
+        android:title="Acount"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_acount"
+        app:cnb_iconColor="@color/light_green_700"
+        />
 
 </menu>

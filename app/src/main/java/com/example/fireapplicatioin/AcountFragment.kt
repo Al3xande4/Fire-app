@@ -6,22 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.NavigationUI
-import com.example.fireapplicatioin.databinding.ActivityMainBinding
-import com.example.fireapplicatioin.databinding.FragmentMapBinding
+import com.example.fireapplicatioin.databinding.FragmentAcountBinding
 
-class MapFragment : Fragment() {
+class AcountFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = DataBindingUtil.inflate<FragmentMapBinding>(inflater, R.layout.fragment_map, container, false)
+        val binding = DataBindingUtil.inflate<FragmentAcountBinding>(inflater, R.layout.fragment_acount, container, false)
         return binding.root
     }
-
-
 }

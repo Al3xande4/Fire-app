@@ -3,20 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/registrationFragment">
+    app:startDestination="@id/mapFragment">
 
     <fragment
         android:id="@+id/mapFragment"
         android:name="com.example.fireapplicatioin.MapFragment"
         android:label="MapFragment"
         tools:layout="@layout/fragment_map"/>
-    <fragment
-        android:id="@+id/registrationFragment"
-        android:name="com.example.fireapplicatioin.EnteranceFragment"
-        android:label="fragment_registration"
-        tools:layout="@layout/fragment_enterance" >
-        <action
-            android:id="@+id/action_registrationFragment_to_mapFragment"
-            app:destination="@id/mapFragment" />
-    </fragment>
 </navigation>

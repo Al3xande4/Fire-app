@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
@@ -24,7 +22,8 @@
                 android:id="@+id/nameEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/name_input" />
+                android:contentDescription="@string/name_input"
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -41,35 +40,20 @@
                 android:layout_width="match_parent"
                 android:id="@+id/passwordEditText"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/name_input" />
+                android:contentDescription="@string/name_input"
+                android:inputType="textPassword"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <LinearLayout
+        <Button
+            android:layout_marginTop="@dimen/margin_top"
+            android:layout_marginStart="8dp"
+            android:id="@+id/signButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/registrationButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/registration"
-                android:layout_marginTop="@dimen/margin_top"
-                android:layout_marginEnd="8dp"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:textColor="#0094cc"
-                />
-
-            <Button
-                android:layout_marginTop="@dimen/margin_top"
-                android:layout_marginStart="8dp"
-                android:id="@+id/signButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/sing_in"
-                android:textColor="@color/black"
-                style="?attr/materialButtonOutlinedStyle"
-                />
-        </LinearLayout>
+            android:text="@string/sing_in"
+            android:textColor="@color/black"
+            style="?attr/materialButtonOutlinedStyle"
+            />
 
 
     </LinearLayout>
