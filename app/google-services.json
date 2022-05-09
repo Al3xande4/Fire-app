@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "476849499073",
+    "firebase_url": "https://crafty-nova-348418-default-rtdb.firebaseio.com",
+    "project_id": "crafty-nova-348418",
+    "storage_bucket": "crafty-nova-348418.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:476849499073:android:a467dbcd21803c27ce1d40",
+        "android_client_info": {
+          "package_name": "com.example.android.navigation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "476849499073-veb0bnfvlplsntnc02touvc30r7n9b86.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsBhe0BCoS-Ry0564BHkyo1xOubwCb29k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "476849499073-veb0bnfvlplsntnc02touvc30r7n9b86.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
