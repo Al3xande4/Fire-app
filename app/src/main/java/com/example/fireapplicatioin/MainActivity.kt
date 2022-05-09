@@ -13,9 +13,16 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.fireapplicatioin.databinding.ActivityMainBinding
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.GoogleMap as GoogleMap1
 
 class MainActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
+    private lateinit var mMap: com.google.android.gms.maps.GoogleMap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,10 +34,8 @@ class MainActivity : AppCompatActivity() {
         drawerLayout = binding.drawerLayout
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
         NavigationUI.setupWithNavController(binding.navView, navController)
-
         val sharedPreferences = getSharedPreferences(getPrefsName(), 0)
         val hasLoggedIn = sharedPreferences.getBoolean("hasLoggedIn", false)
-
         if (!hasLoggedIn) {
             val intent = Intent(this, EnterActivity::class.java)
             startActivity(intent)
