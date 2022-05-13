@@ -1,28 +1,22 @@
 package com.example.fireapplicatioin
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.appcompat.widget.Toolbar
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.example.fireapplicatioin.databinding.ActivityMainBinding
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.maps.GoogleMap as GoogleMap1
 
 class MainActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
-    private lateinit var mMap: com.google.android.gms.maps.GoogleMap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         drawerLayout = binding.drawerLayout
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
         NavigationUI.setupWithNavController(binding.navView, navController)
+
         val sharedPreferences = getSharedPreferences(getPrefsName(), 0)
         val hasLoggedIn = sharedPreferences.getBoolean("hasLoggedIn", false)
         if (!hasLoggedIn) {
@@ -42,34 +37,33 @@ class MainActivity : AppCompatActivity() {
             finish()
         }
 
-        binding.bottomNavigation.selectedItemId = R.id.nav_fire
-        binding.bottomNavigation.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.nav_fire -> setCurrentFragment(MapFragment())
-                R.id.nav_account -> setCurrentFragment(AcountFragment())
-                R.id.nav_news -> setCurrentFragment(NewsFragment())
-            }
-            return@setOnItemSelectedListener true
-        }
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.navigation_news, R.id.navigation_fire, R.id.navigation_account
+            )
+        )
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        binding.bottomNavigation.setupWithNavController(navController)
 
-        binding.bottomNavigation2.setItemSelected(R.id.nav_fire, true)
         binding.bottomNavigation2.setOnItemSelectedListener {
             when (it) {
-                R.id.nav_fire -> setCurrentFragment(MapFragment())
-                R.id.nav_account -> setCurrentFragment(AcountFragment())
-                R.id.nav_news -> setCurrentFragment(NewsFragment())
+                R.id.navigation_fire -> setCurrentFragment(FireFragment())
+                R.id.navigation_account -> setCurrentFragment(AcountFragment())
+                R.id.navigation_news -> setCurrentFragment(NewsFragment())
             }
         }
 
+
         binding.bottomNavigation3.setNavigationChangeListener { view: View, position: Int ->
-            when (view.id) {
-                R.id.c_item_fire -> setCurrentFragment(MapFragment())
-                R.id.c_item_account -> setCurrentFragment(AcountFragment())
-                R.id.c_item_news -> setCurrentFragment(NewsFragment())
+            when (position) {
+                1 -> setCurrentFragment(FireFragment())
+                2 -> setCurrentFragment(AcountFragment())
+                0 -> setCurrentFragment(NewsFragment())
             }
         }
 
     }
+
 
     private fun setCurrentFragment(fragment: Fragment) =
         supportFragmentManager.beginTransaction().apply {

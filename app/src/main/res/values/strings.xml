@@ -7,4 +7,14 @@
     <string name="password">Password</string>
     <string name="name">Name:</string>
     <string name="sing_in">Sing in</string>
+    <string name="dropped_pin">Dropped pin</string>
+    <string name="fire">Fire!!!</string>
+    <string name="fire_title_1">Big fire near Ekaterenburg</string>
+    <string name="fire_title_2">Friends were having diner and suddenly it started fire</string>
+    <string name="fire_title_3">Fire destroys Miass Forest near world-famous national park</string>
+    <string name="fire_title_4">Fire near Chelyabinsk still can not be extinguished</string>
+    <string name="fire_title_5">Residential fire in Kazan</string>
+    <string name="fire_title_6">Factory fire near Moscow</string>
+    <string name="fire_title_7">Firefighters put out the fire in Miass with help of brave volunteers</string>
+    <string name="fire_title_8">Fuel depot in Saint Petersburg</string>
 </resources>

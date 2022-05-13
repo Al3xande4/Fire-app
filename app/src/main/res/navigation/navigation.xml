@@ -3,11 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/mapFragment">
-
+    app:startDestination="@id/navigation_fire">
     <fragment
-        android:id="@+id/mapFragment"
-        android:name="com.example.fireapplicatioin.MapFragment"
+        android:id="@+id/navigation_fire"
+        android:name="com.example.fireapplicatioin.FireFragment"
         android:label="MapFragment"
-        tools:layout="@layout/fragment_map"/>
+        tools:layout="@layout/fragment_fire"/>
+    <fragment
+        android:id="@+id/navigation_news"
+        android:name="com.example.fireapplicatioin.NewsFragment"
+        android:label="NewsFragment"
+        tools:layout="@layout/fragment_news"/>
+    <fragment
+        android:id="@+id/navigation_account"
+        android:name="com.example.fireapplicatioin.AcountFragment"
+        android:label="AcountFragment"
+        tools:layout="@layout/fragment_acount"/>
 </navigation>

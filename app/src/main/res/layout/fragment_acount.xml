@@ -8,21 +8,28 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".MainActivity"
-        android:layout_marginStart="32dp"
         >
+
+        <ImageView
+            android:layout_margin="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="150sp"
+            android:layout_gravity="center_horizontal"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginStart="32dp"
             android:layout_marginBottom="8dp"
-            android:text="Name" />
+            android:text="Name:" />
 
         <TextView
+            android:layout_marginStart="32dp"
             android:layout_marginTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="About" />
+            android:text="About:" />
 
     </LinearLayout>
 </layout>
