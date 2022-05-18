@@ -15,37 +15,23 @@
             app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textField"
             tools:context=".MapsActivity" />
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textField"
+        <LinearLayout
             android:layout_width="match_parent"
+            android:orientation="horizontal"
             android:layout_height="wrap_content"
-            android:hint="Search"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:layout_marginTop="10dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigation"
-            style="@style/Widget.MaterialComponents.BottomNavigationView.PrimarySurface"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:layout_gravity="bottom"
-            app:menu="@menu/item_menu"
-            android:background="@drawable/news_shape"
-            app:itemIconSize="20dp"
-            app:itemIconTint="@drawable/item_selector"
-            app:labelVisibilityMode="labeled"
-            />
+            android:padding="8dp">
+            <Spinner
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/sp_type"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:text="find"
+                android:id="@+id/find_button"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
     </FrameLayout>
 </layout>
