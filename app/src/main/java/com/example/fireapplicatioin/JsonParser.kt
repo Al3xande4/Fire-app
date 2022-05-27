@@ -4,9 +4,9 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.lang.Exception
 
-public class JsonParser {
+class JsonParser {
     fun parseJsonObject(obj: JSONObject): HashMap<String, String>{
-        var dataList = HashMap<String, String>()
+        val dataList = HashMap<String, String>()
         try {
             val name = obj.getString("name")
             val latitude = obj.getJSONObject("geometry")

@@ -7,6 +7,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity">
+
+
         <fragment
             android:id="@+id/map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -16,22 +18,29 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:context=".MapsActivity" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:layout_width="wrap_content"
+            android:id="@+id/floating"
             android:layout_height="wrap_content"
-            android:padding="8dp">
-            <Spinner
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:id="@+id/sp_type"/>
-            <Button
-                android:layout_width="wrap_content"
-                android:text="find"
-                android:id="@+id/find_button"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="96dp"
+            android:layout_marginEnd="16dp"
+            app:backgroundTint="@color/red"
+            app:icon="@drawable/ic_fire"
+            android:text="Nearest fire"
+            />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:id="@+id/myLoc"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|left"
+            android:layout_marginBottom="96dp"
+            android:layout_marginStart="32dp"
+            android:backgroundTint="@color/white"
+            app:srcCompat="@drawable/ic_location"
+            />
 
     </FrameLayout>
 </layout>

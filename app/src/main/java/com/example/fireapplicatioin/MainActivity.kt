@@ -1,10 +1,12 @@
 package com.example.fireapplicatioin
 
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.coordinatorlayout.widget.CoordinatorLayout
+import android.view.WindowInsets
+import android.view.WindowManager
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -25,9 +27,10 @@ class MainActivity : AppCompatActivity() {
             DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         val navController = this.findNavController(R.id.myNavHostFragment)
 
-        drawerLayout = binding.drawerLayout
-        NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
-        NavigationUI.setupWithNavController(binding.navView, navController)
+
+//        drawerLayout = binding.drawerLayout
+//        NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
+//        NavigationUI.setupWithNavController(binding.navView, navController)
 
         val sharedPreferences = getSharedPreferences(getPrefsName(), 0)
         val hasLoggedIn = sharedPreferences.getBoolean("hasLoggedIn", false)
@@ -42,7 +45,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_news, R.id.navigation_fire, R.id.navigation_account
             )
         )
-        setupActionBarWithNavController(navController, appBarConfiguration)
+//        setupActionBarWithNavController(navController, appBarConfiguration)
         binding.bottomNavigation.setupWithNavController(navController)
 
         binding.bottomNavigation2.setOnItemSelectedListener {
@@ -54,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        binding.bottomNavigation3.setNavigationChangeListener { view: View, position: Int ->
+        binding.bottomNavigation3.setNavigationChangeListener { _: View, position: Int ->
             when (position) {
                 1 -> setCurrentFragment(FireFragment())
                 2 -> setCurrentFragment(AcountFragment())

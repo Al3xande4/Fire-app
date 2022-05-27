@@ -43,6 +43,6 @@ class OnScrollListener(val bottom_navigation: BottomNavigationView): RecyclerVie
     }
 
     override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-        super.onScrollStateChanged(recyclerView!!, newState)
+        super.onScrollStateChanged(recyclerView, newState)
     }
 }

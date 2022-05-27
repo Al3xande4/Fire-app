@@ -7,13 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.example.fireapplicatioin.MainActivity
 import com.example.fireapplicatioin.NewsFlashActivity
 import com.example.fireapplicatioin.R
 import com.example.fireapplicatioin.data.Datasource
-import com.example.fireapplicatioin.data.NewsFlash
+import com.example.fireapplicatioin.model.NewsFlash
 
 class ItemAdapter(val context: Context) : RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
 

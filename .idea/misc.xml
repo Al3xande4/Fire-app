@@ -13,9 +13,10 @@
         <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/drawable/ic_launcher_background.xml" value="0.246875" />
         <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.246875" />
         <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/drawable/item_selector.xml" value="0.41384615384615386" />
+        <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/drawable/map_bachground.xml" value="0.246875" />
         <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/drawable/news_shape.xml" value="0.246875" />
         <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/drawable/round_corner.xml" value="0.41384615384615386" />
-        <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/layout-v21/fragment_fire.xml" value="0.4041666666666667" />
+        <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/layout-v21/fragment_fire.xml" value="0.23072916666666668" />
         <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/layout-v21/fragment_map.xml" value="0.4041666666666667" />
         <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/layout/activity_enter.xml" value="0.4041666666666667" />
         <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/layout/activity_main.xml" value="0.23072916666666668" />
@@ -23,11 +24,13 @@
         <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/layout/fire_activity.xml" value="0.4041666666666667" />
         <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/layout/fragment_acount.xml" value="0.4041666666666667" />
         <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/layout/fragment_enterance.xml" value="0.4041666666666667" />
+        <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/layout/fragment_fire.xml" value="0.4041666666666667" />
         <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/layout/fragment_map.xml" value="0.23072916666666668" />
         <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/layout/fragment_news.xml" value="0.4041666666666667" />
         <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/layout/fragment_news_flash.xml" value="0.23072916666666668" />
         <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/layout/item_view.xml" value="0.23072916666666668" />
         <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/layout/nav_header.xml" value="0.4041666666666667" />
+        <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/layout/toolbar_layout.xml" value="0.4041666666666667" />
         <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/menu/item_menu.xml" value="0.4041666666666667" />
         <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/menu/navdrawer_menu.xml" value="0.4041666666666667" />
         <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.246875" />
