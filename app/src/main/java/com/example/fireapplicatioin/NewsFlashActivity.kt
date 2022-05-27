@@ -8,6 +8,7 @@ import androidx.core.app.ActivityCompat.startActivityForResult
 
 import android.content.Intent
 import android.view.MenuItem
+import kotlin.concurrent.thread
 
 
 class NewsFlashActivity : AppCompatActivity() {
@@ -22,9 +23,12 @@ class NewsFlashActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val myIntent = Intent(applicationContext, MainActivity::class.java)
-        myIntent.putExtra("activeItem", 0)
-        startActivity(myIntent)
+
+        val myThread = thread {
+
+        }
+        myThread.start()
+        onBackPressed()
         return true
     }
 }

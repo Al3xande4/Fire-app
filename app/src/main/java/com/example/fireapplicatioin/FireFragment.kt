@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +22,8 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import kotlinx.coroutines.runBlocking
+import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -32,7 +35,7 @@ class FireFragment : Fragment(), OnMapReadyCallback {
 
     private var currentLoc: Location = Location("FireLocation")
 
-    private lateinit var firePoints: ArrayList<FirePoint>
+    private lateinit var firePoints: ArrayList<Fire>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,34 +47,19 @@ class FireFragment : Fragment(), OnMapReadyCallback {
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-//        val placeTypeList = arrayListOf("hospital", "fire", "fire_department", "atm")
-//        val placeNameList = arrayListOf("Hospital", "Fire", "Fire Department", "ATM")
-//
-//        binding.spType.adapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_dropdown_item
-//        , placeNameList)
-
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context!!)
 
-//        binding.findButton.setOnClickListener{
-//            val i = binding.spType.selectedItemPosition
-//            val url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json" +
-//                    "?location=" + currentLat + "," + currentLong +
-//                    "&radius=5000" +
-//                    "&type=" + placeTypeList[i] +
-//                    "&sensor=true" +
-//                    "&key=" + getResources().getString(R.string.google_maps_key)
-//            PlaceTask(map).execute(url)
-//        }
-
         val datasource = Datasource()
-        firePoints = datasource.loadFirePoints()
+
 
         getCurrentLocation()
 
+        getFires()
 
         binding.floating?.setOnClickListener{
             map.animateCamera(CameraUpdateFactory.newLatLngZoom(
-                firePoints.first().latLng, 15f
+                LatLng(firePoints.first().lat,
+                firePoints.first().lng), 15f
             ))
         }
 
@@ -86,14 +74,22 @@ class FireFragment : Fragment(), OnMapReadyCallback {
         return binding.root
     }
 
+    private fun getFires() = runBlocking {
+        try {
+            firePoints = java.util.ArrayList(Api.retrofitService.getProperties())
+        }catch (e: Exception){
+            Log.e("FireFragment", "$e")
+        }
+    }
+
     private fun getCurrentLocation(){
         if(isPermissionGranted()){
             fusedLocationProviderClient.lastLocation.addOnCompleteListener { it ->
                 currentLoc = it.result
                 firePoints.sortBy {
                     val firePointLoc = Location("LocationFire")
-                    firePointLoc.latitude = it.latLng.latitude
-                    firePointLoc.longitude = it.latLng.longitude
+                    firePointLoc.latitude = it.lat
+                    firePointLoc.longitude = it.lng
                     currentLoc.distanceTo(firePointLoc)
                 }
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(
@@ -161,18 +157,22 @@ class FireFragment : Fragment(), OnMapReadyCallback {
             val snippet = String.format(
                 Locale.getDefault(),
                 "Lat: %1$.5f, Long: %2$.5f",
-                firePoint.latLng.latitude,
-                firePoint.latLng.longitude
+                firePoint.lat,
+                firePoint.lng
             )
             map.addMarker(MarkerOptions()
-                .position(firePoint.latLng)
+                .position(
+                    LatLng(
+                    firePoint.lat, firePoint.lng)
+                )
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
                 .snippet(snippet)
                 .title(getString(R.string.fire)))
             map.addGroundOverlay(
                 GroundOverlayOptions()
                     .image(BitmapDescriptorFactory.fromResource(R.drawable.img))
-                    .position(firePoint.latLng, firePoint.size))
+                    .position(LatLng(
+                        firePoint.lat, firePoint.lng), 1000f))
         }
     }
 
@@ -203,73 +203,5 @@ class FireFragment : Fragment(), OnMapReadyCallback {
             poiMarker?.showInfoWindow()
         }
     }
-
-//    private class PlaceTask(val map: GoogleMap): AsyncTask<String, Int, String>(){
-//        override fun doInBackground(vararg p0: String?): String {
-//            return downloadUrl(p0[0]!!)
-//        }
-//
-//        override fun onPostExecute(result: String?) {
-//            ParserTask(map).execute(result)
-//        }
-//        private fun downloadUrl(string: String): String{
-//            val url = URL(string)
-//            val connection = url.openConnection() as HttpURLConnection
-//
-//            connection.connect()
-//
-//
-//            val inputStream = connection.inputStream
-//            val reader = BufferedReader(InputStreamReader(inputStream))
-//            val builder = StringBuilder()
-//            var line = ""
-//            reader.lineSequence().forEach {
-//                builder.append(it)
-//            }
-//            val data = builder.toString()
-//
-//            Log.d("FireFragment", "${data} data")
-//
-//            reader.close()
-//            return data
-//        }
-//
-//        private class ParserTask(val map: GoogleMap): AsyncTask<String, Int, List<HashMap<String, String>>>() {
-//            override fun doInBackground(vararg p0: String?): List<HashMap<String, String>> {
-//                val jsonParser = JsonParser()
-//                var mapList: List<HashMap<String, String>>? = null
-//                val obj: JSONObject?
-//                try {
-//                    obj = JSONObject(p0[0]!!)
-//                    Log.d("FireFragment", "${obj} obj")
-//                    mapList = jsonParser.parseResult(obj)
-//                }catch (e: Exception){
-//
-//                }
-//                Log.d("FireFragment", "${mapList} map list")
-//                return mapList!!
-//            }
-//
-//            override fun onPostExecute(result: List<HashMap<String, String>>?) {
-//                map.clear()
-//                val size = result!!.size - 1
-//                for(i in 0..size){
-//                    val hashMapList = result[i]
-//                    val lat = hashMapList["lat"]!!.toDouble()
-//                    val lng = hashMapList["lng"]!!.toDouble()
-//                    val name = hashMapList["name"]
-//                    val latLng = LatLng(lat, lng)
-//                    val markerOptions = MarkerOptions()
-//
-//                    markerOptions.position(latLng)
-//                    markerOptions.title(name)
-//
-//                    map.addMarker(markerOptions)
-//                }
-//            }
-//
-//        }
-//
-//    }
 
 }
