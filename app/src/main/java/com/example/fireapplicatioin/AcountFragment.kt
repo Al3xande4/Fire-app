@@ -3,12 +3,15 @@ package com.example.fireapplicatioin
 import android.Manifest;
 import android.app.Activity.RESULT_OK
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap
 import android.media.Image
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View;
 import android.view.ViewGroup
@@ -22,8 +25,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.bumptech.glide.Glide.with
 import com.bumptech.glide.disklrucache.DiskLruCache
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.fireapplicatioin.databinding.FragmentAcountBinding
 import com.firebase.ui.database.paging.FirebaseDataSource
 import com.google.firebase.auth.FirebaseAuth
@@ -35,36 +40,61 @@ import com.google.firebase.database.ValueEventListener
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView
+import com.google.firebase.storage.StorageReference
+import androidx.core.app.ActivityCompat
+
+import android.app.Activity
+import android.content.Context
+import android.graphics.drawable.Drawable
+import com.google.firebase.database.DatabaseReference
+
+import com.google.android.gms.tasks.OnCompleteListener
+
+import com.google.firebase.auth.UserProfileChangeRequest
+
+import com.google.firebase.storage.UploadTask
+
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.android.gms.tasks.Task
+
+import com.google.firebase.storage.FirebaseStorage
+
+
+
 
 
 class AcountFragment : Fragment() {
 
     lateinit var userpic: ImageView
 
-    private val GalleryPick = 1
-    private val CAMERA_REQUEST = 100
-    private val STORAGE_REQUEST = 200
-    private val IMAGEPICK_GALLERY_REQUEST = 300
-    private val IMAGE_PICKCAMERA_REQUEST = 400
+
     lateinit var cameraPermission: Array<String>
     lateinit var storagePermission: Array<String>
 
-    var imageuri: Uri? = null
+    private var imageUri: Uri? = null
+
+    private var email: String? = null
+    private  var username:kotlin.String? = null
+    private  var password:kotlin.String? = null
+
+    private lateinit var firebaseAuth: FirebaseAuth
+
+    private lateinit var binding: FragmentAcountBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View{
-        val binding = DataBindingUtil.inflate<FragmentAcountBinding>(inflater, R.layout.fragment_acount, container, false)
+        binding = DataBindingUtil.inflate<FragmentAcountBinding>(inflater, R.layout.fragment_acount, container, false)
 
+
+        firebaseAuth = FirebaseAuth.getInstance()
         userpic = binding.imgCamera
 
         cameraPermission =
             arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         storagePermission = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-
-        binding.imgCamera.setOnClickListener{ showImagePicDialog()}
 
         val user = FirebaseAuth.getInstance().currentUser
         val reference = FirebaseDatabase.getInstance().getReference("Users")
@@ -96,7 +126,30 @@ class AcountFragment : Fragment() {
 //                )
 //            }
 //        }
+        binding.imgCamera.setOnClickListener{view ->
+            if (isStorageOk(requireContext())) {
+                pickImage()
+            } else {
+                requestStoragePermission(requireActivity());
+            }
+        }
         return binding.root
+    }
+
+    fun isStorageOk(context: Context?): Boolean {
+        return ContextCompat.checkSelfPermission(
+            context!!,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    fun requestStoragePermission(activity: Activity?) {
+        ActivityCompat.requestPermissions(
+            activity!!, arrayOf(
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ), 1000
+        )
     }
 
     private fun pickImage() {
@@ -105,112 +158,81 @@ class AcountFragment : Fragment() {
             .start(requireContext(), this)
     }
 
-    private fun showImagePicDialog() {
-        val options = arrayOf("Camera", "Gallery")
-        val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("Pick Image From")
-        builder.setItems(options, DialogInterface.OnClickListener { dialog, which ->
-            if (which == 0) {
-                if (!checkCameraPermission()!!) {
-                    requestCameraPermission()
-                } else {
-                    pickFromGallery()
-                }
-            } else if (which == 1) {
-                if (!checkStoragePermission()) {
-                    requestStoragePermission()
-                } else {
-                    pickFromGallery()
-                }
-            }
-        })
-        builder.create().show()
-    }
 
-    // checking storage permissions
-    private fun checkStoragePermission(): Boolean {
-        return ContextCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-        ) == PackageManager.PERMISSION_GRANTED
-    }
-
-    // Requesting  gallery permission
-    private fun requestStoragePermission() {
-        requestPermissions(storagePermission, STORAGE_REQUEST)
-    }
-
-    // checking camera permissions
-    private fun checkCameraPermission(): Boolean {
-        val result = ContextCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.CAMERA
-        ) == PackageManager.PERMISSION_GRANTED
-        val result1 = ContextCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-        ) == PackageManager.PERMISSION_GRANTED
-        return result && result1
-    }
-
-    // Requesting camera permission
-    private fun requestCameraPermission() {
-        requestPermissions(cameraPermission, CAMERA_REQUEST)
-    }
-
-    // Requesting camera and gallery
-    // permission if not given
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String?>,
-        grantResults: IntArray
-    ) {
-        when (requestCode) {
-            CAMERA_REQUEST -> {
-                if (grantResults.size > 0) {
-                    val camera_accepted = grantResults[0] == PackageManager.PERMISSION_GRANTED
-                    val writeStorageaccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED
-                    if (camera_accepted && writeStorageaccepted) {
-                        pickFromGallery()
-                    } else {
-                        Toast.makeText(
-                            requireContext(),
-                            "Please Enable Camera and Storage Permissions",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                }
-            }
-            STORAGE_REQUEST -> {
-                if (grantResults.size > 0) {
-                    val writeStorageaccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED
-                    if (writeStorageaccepted) {
-                        pickFromGallery()
-                    } else {
-                        Toast.makeText(requireContext(), "Please Enable Storage Permissions", Toast.LENGTH_LONG)
-                            .show()
-                    }
-                }
-            }
-        }
-    }
-
-    // Here we will pick image from gallery or camera
-    private fun pickFromGallery() {
-        CropImage.activity().start(requireActivity())
-    }
-
-    override fun onActivityResult(
-        requestCode: Int,
-        resultCode: Int,
-        @Nullable data: Intent?
-    ) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data)
             if (resultCode == RESULT_OK) {
-                val resultUri: Uri = result.uri
-                with(requireContext()).load(resultUri).into(userpic)
+                imageUri = result.uri
+                uploadImage(imageUri ?: return)
+                with(this).load(imageUri).into(binding.imgProfile)
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                val exception = result.error
+                Log.d("TAG", "onActivityResult: $exception")
+            }
+        }
+    }
+
+    private fun uploadImage(imageUri: Uri) {
+        val storageReference = FirebaseStorage.getInstance().reference
+        storageReference.child(firebaseAuth.getUid() + "/Profile/image_profile.jpg").putFile(imageUri)
+            .addOnSuccessListener { taskSnapshot ->
+                val image: Task<Uri> = taskSnapshot.storage.downloadUrl
+                image.addOnCompleteListener(OnCompleteListener<Uri?> { task ->
+                    if (task.isSuccessful) {
+                        val url = task.result.toString()
+                        val profileChangeRequest = UserProfileChangeRequest.Builder()
+                            .setPhotoUri(Uri.parse(url))
+                            .build()
+                        firebaseAuth.getCurrentUser()?.updateProfile(profileChangeRequest)
+                            ?.addOnCompleteListener(
+                                OnCompleteListener<Void?> { profile ->
+                                    if (profile.isSuccessful) {
+                                        val databaseReference =
+                                            FirebaseDatabase.getInstance().getReference("Users")
+                                        val map: MutableMap<String, Any> =
+                                            HashMap()
+                                        map["image"] = url
+                                        firebaseAuth.getUid()?.let {
+                                            databaseReference.child(it)
+                                                .updateChildren(map)
+                                        }
+                                        Log.d("TAG", url)
+                                        with(this).load(url)
+                                            .into(
+                                                binding.imgProfile
+                                            )
+                                        Toast.makeText(requireContext(), "Image Updated", Toast.LENGTH_SHORT)
+                                            .show()
+                                    } else {
+                                        Log.d("TAG", "Profile : " + profile.exception)
+                                        Toast.makeText(
+                                            context,
+                                            "Profile : " + profile.exception,
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                })
+                    } else {
+                        Toast.makeText(context, "" + task.exception, Toast.LENGTH_SHORT).show()
+                        Log.d("TAG", "onComplete: image url  " + task.exception)
+                    }
+                })
+            }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 1000) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                pickImage();
+            } else {
+                Toast.makeText(requireContext(), "Storage permission denied.", Toast.LENGTH_SHORT).show();
             }
         }
     }

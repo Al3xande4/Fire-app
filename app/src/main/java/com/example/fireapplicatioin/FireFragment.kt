@@ -85,6 +85,9 @@ class FireFragment : Fragment(), OnMapReadyCallback {
     private fun getCurrentLocation(){
         if(isPermissionGranted()){
             fusedLocationProviderClient.lastLocation.addOnCompleteListener { it ->
+                if(it.result == null){
+                    return@addOnCompleteListener
+                }
                 currentLoc = it.result
                 firePoints.sortBy {
                     val firePointLoc = Location("LocationFire")
