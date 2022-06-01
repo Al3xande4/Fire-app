@@ -17,4 +17,5 @@
     <string name="fire_title_6">Factory fire near Moscow</string>
     <string name="fire_title_7">Firefighters put out the fire in Miass with help of brave volunteers</string>
     <string name="fire_title_8">Fuel depot in Saint Petersburg</string>
+    <string name="login_string">Already have an account? <b>Login here</b></string>
 </resources>

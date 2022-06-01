@@ -9,9 +9,17 @@
         <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/drawable/fire_shape.xml" value="0.41384615384615386" />
         <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/drawable/ic_acount.xml" value="0.246875" />
         <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/drawable/ic_baseline_person_outline_24.xml" value="0.246875" />
+        <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/drawable/ic_camera.xml" value="0.246875" />
+        <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/drawable/ic_edit.xml" value="0.246875" />
+        <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/drawable/ic_email.xml" value="0.41384615384615386" />
+        <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/drawable/ic_email_filled.xml" value="0.246875" />
         <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/drawable/ic_fire.xml" value="0.246875" />
         <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/drawable/ic_launcher_background.xml" value="0.246875" />
         <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.246875" />
+        <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/drawable/ic_lock.xml" value="0.41384615384615386" />
+        <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/drawable/ic_lock_filled.xml" value="0.246875" />
+        <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/drawable/ic_next.xml" value="0.246875" />
+        <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/drawable/ic_person.xml" value="0.41384615384615386" />
         <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/drawable/item_selector.xml" value="0.41384615384615386" />
         <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/drawable/map_bachground.xml" value="0.246875" />
         <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/drawable/news_shape.xml" value="0.246875" />
@@ -22,7 +30,7 @@
         <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/layout/activity_main.xml" value="0.23072916666666668" />
         <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/layout/activity_news_flash.xml" value="0.21666666666666667" />
         <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/layout/fire_activity.xml" value="0.4041666666666667" />
-        <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/layout/fragment_acount.xml" value="0.4041666666666667" />
+        <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/layout/fragment_acount.xml" value="0.23072916666666668" />
         <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/layout/fragment_enterance.xml" value="0.4041666666666667" />
         <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/layout/fragment_fire.xml" value="0.4041666666666667" />
         <entry key="..\:/Users/alex/AndroidStudioProjects/Fire-app/app/src/main/res/layout/fragment_map.xml" value="0.23072916666666668" />

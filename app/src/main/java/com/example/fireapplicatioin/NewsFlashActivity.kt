@@ -18,17 +18,7 @@ class NewsFlashActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.image.setImageResource(intent.getIntExtra("imageId", 1))
         binding.title.setText(intent.getIntExtra("titleId", 1))
-        val backButton = actionBar
-        backButton?.setDisplayHomeAsUpEnabled(true)
+        binding.btnBack.setOnClickListener{ onBackPressed() }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        val myThread = thread {
-
-        }
-        myThread.start()
-        onBackPressed()
-        return true
-    }
 }

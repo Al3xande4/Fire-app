@@ -28,10 +28,6 @@ class MainActivity : AppCompatActivity() {
         val navController = this.findNavController(R.id.myNavHostFragment)
 
 
-//        drawerLayout = binding.drawerLayout
-//        NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
-//        NavigationUI.setupWithNavController(binding.navView, navController)
-
         val sharedPreferences = getSharedPreferences(getPrefsName(), 0)
         val hasLoggedIn = sharedPreferences.getBoolean("hasLoggedIn", false)
         if (!hasLoggedIn) {
@@ -40,14 +36,10 @@ class MainActivity : AppCompatActivity() {
             finish()
         }
 
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_news, R.id.navigation_fire, R.id.navigation_account
-            )
-        )
-//        setupActionBarWithNavController(navController, appBarConfiguration)
         binding.bottomNavigation.setupWithNavController(navController)
 
+
+        binding.bottomNavigation2.setItemSelected(R.id.navigation_fire, true)
         binding.bottomNavigation2.setOnItemSelectedListener {
             when (it) {
                 R.id.navigation_fire -> setCurrentFragment(FireFragment())

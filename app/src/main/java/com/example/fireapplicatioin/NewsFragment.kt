@@ -13,6 +13,7 @@ import com.example.fireapplicatioin.adapter.ItemAdapter
 import com.example.fireapplicatioin.databinding.FragmentNewsBinding
 import com.gauravk.bubblenavigation.BubbleNavigationConstraintView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.ismaeldivita.chipnavigation.ChipNavigationBar
 
 
 class NewsFragment : Fragment() {
@@ -23,16 +24,16 @@ class NewsFragment : Fragment() {
     ): View? {
         val binding = DataBindingUtil.inflate<FragmentNewsBinding>(inflater, R.layout.fragment_news, container, false)
         val recyclerView = binding.recyclerView
-        recyclerView.adapter = ItemAdapter(context!!)
-        val llm = LinearLayoutManager(context!!)
+        recyclerView.adapter = ItemAdapter(requireContext())
+        val llm = LinearLayoutManager(requireContext())
         llm.orientation = LinearLayoutManager.VERTICAL
         recyclerView.layoutManager = llm
-        recyclerView.addOnScrollListener(OnScrollListener(activity!!.findViewById(R.id.bottom_navigation)))
+        recyclerView.addOnScrollListener(OnScrollListener(requireActivity().findViewById(R.id.bottom_navigation2)))
         return binding.root
     }
 }
 
-class OnScrollListener(val bottom_navigation: BottomNavigationView): RecyclerView.OnScrollListener(){
+class OnScrollListener(val bottom_navigation: ChipNavigationBar): RecyclerView.OnScrollListener(){
 
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         if (dy > 0 && bottom_navigation.isShown) {
