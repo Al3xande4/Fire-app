@@ -93,6 +93,19 @@ class EnterActivity : AppCompatActivity() {
 
                 }
             }
+
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this){task ->
+                if(task.isSuccessful){
+                    val sharedPreferences = getSharedPreferences(getPrefsName(), 0)
+                    val editor = sharedPreferences.edit()
+                    editor.putBoolean("hasLoggedIn", true)
+                    editor.apply()
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            }
     }
 }
 
