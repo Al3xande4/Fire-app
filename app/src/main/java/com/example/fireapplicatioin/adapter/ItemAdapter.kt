@@ -49,7 +49,7 @@ class ItemAdapter(val context: Context) : RecyclerView.Adapter<ItemAdapter.ViewH
 
     override fun getItemCount(): Int = dataset.size
 
-    class ViewHolder(val itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textView: TextView = itemView.findViewById(R.id.item_text)
         val imageView: ImageView = itemView.findViewById(R.id.item_image)
 

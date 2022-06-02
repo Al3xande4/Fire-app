@@ -1,23 +1,10 @@
 package com.example.fireapplicatioin
 
 import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import com.example.fireapplicatioin.databinding.ActivityEnterBinding
-
-import android.widget.Toast
-
-import android.content.pm.PackageManager
-import android.util.Log
 import androidx.databinding.DataBindingUtil
-
-
-import com.google.android.gms.tasks.OnSuccessListener
-
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -30,10 +17,10 @@ fun getPrefsName(): String{
 }
 
 class EnterActivity : AppCompatActivity() {
-    lateinit var mDataBase: DatabaseReference
+    private lateinit var mDataBase: DatabaseReference
     lateinit var binding: ActivityEnterBinding
 
-    val userKey = "User"
+    private val userKey = "User"
 
     private lateinit var auth: FirebaseAuth
 
@@ -42,7 +29,7 @@ class EnterActivity : AppCompatActivity() {
         setContentView(R.layout.activity_enter)
 
         mDataBase = FirebaseDatabase.getInstance().getReference(userKey)
-        binding = DataBindingUtil.setContentView<ActivityEnterBinding>(this, R.layout.activity_enter)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_enter)
 
         auth = FirebaseAuth.getInstance()
 
@@ -52,7 +39,7 @@ class EnterActivity : AppCompatActivity() {
 
     }
 
-    fun onClickSave(){
+    private fun onClickSave(){
         val id = mDataBase.key
         val name = binding.edtUsername.text.toString()
         val password = binding.edtPassword.text.toString()
@@ -60,25 +47,25 @@ class EnterActivity : AppCompatActivity() {
 
 
         if(email.isEmpty()){
-            binding.edtEmail.setError("Email is required")
+            binding.edtEmail.error = "Email is required"
             binding.edtEmail.requestFocus()
             return
         }
 
         if(name.isEmpty()){
-            binding.edtUsername.setError("Name is required")
+            binding.edtUsername.error = "Name is required"
             binding.edtUsername.requestFocus()
             return
         }
 
         if(password.isEmpty()){
-            binding.edtPassword.setError("Password is required")
+            binding.edtPassword.error = "Password is required"
             binding.edtPassword.requestFocus()
             return
         }
 
         if(password.length < 6){
-            binding.edtPassword.setError("Password is too short")
+            binding.edtPassword.error = "Password is too short"
             binding.edtPassword.requestFocus()
             return
         }
@@ -88,41 +75,24 @@ class EnterActivity : AppCompatActivity() {
                     val user = id?.let { User(it, name, password, email) }
                     Firebase.database.getReference("Users")
                         .child(FirebaseAuth.getInstance().currentUser!!.uid)
-                        .setValue(user).addOnCompleteListener(this){task ->
-
+                        .setValue(user).addOnCompleteListener(this){
+                            auth.signInWithEmailAndPassword(email, password)
+                                .addOnCompleteListener(this){task ->
+                                    if(task.isSuccessful){
+                                        val sharedPreferences = getSharedPreferences(getPrefsName(), 0)
+                                        val editor = sharedPreferences.edit()
+                                        editor.putBoolean("hasLoggedIn", true)
+                                        editor.apply()
+                                        val intent = Intent(this, MainActivity::class.java)
+                                        startActivity(intent)
+                                        finish()
+                                    }
+                                }
                         }
 
+
                 }
             }
-
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this){task ->
-                if(task.isSuccessful){
-                    val user = FirebaseAuth.getInstance().currentUser
-                    if(user!!.isEmailVerified){
-                        val sharedPreferences = getSharedPreferences(getPrefsName(), 0)
-                        val editor = sharedPreferences.edit()
-                        editor.putBoolean("hasLoggedIn", true)
-                        editor.apply()
-                        val intent = Intent(this, MainActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                    }else{
-                        user.sendEmailVerification()
-                        Toast.makeText(this, "Check your email", Toast.LENGTH_LONG).show()
-                    }
-                }else{
-                    Log.d("ActivityEnter", "fda")
-                }
-            }
-
-        val sharedPreferences = getSharedPreferences(getPrefsName(), 0)
-        val editor = sharedPreferences.edit()
-        editor.putBoolean("hasLoggedIn", true)
-        editor.apply()
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish()
     }
 }
 

@@ -14,7 +14,6 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.example.fireapplicatioin.data.Datasource
 import com.example.fireapplicatioin.databinding.FragmentFireBinding
-import com.example.fireapplicatioin.model.FirePoint
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -49,8 +48,6 @@ class FireFragment : Fragment(), OnMapReadyCallback {
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context!!)
 
-        val datasource = Datasource()
-
 
         getCurrentLocation()
 
@@ -64,6 +61,7 @@ class FireFragment : Fragment(), OnMapReadyCallback {
         }
 
         binding.myLoc?.setOnClickListener{
+            getCurrentLocation()
             map.animateCamera(CameraUpdateFactory.newLatLngZoom(
                 LatLng(
                     currentLoc.latitude, currentLoc.longitude
@@ -72,6 +70,20 @@ class FireFragment : Fragment(), OnMapReadyCallback {
         }
 
         return binding.root
+    }
+
+    override fun onMapReady(p0: GoogleMap) {
+
+        map = p0
+        Log.d("FireFragment", "fa")
+
+        enableMyLocation()
+
+        setPoiClick(map)
+        map.uiSettings.isMyLocationButtonEnabled = false
+
+        drawFirePoints()
+        drawVolunteers()
     }
 
     private fun getFires() = runBlocking {
@@ -84,11 +96,29 @@ class FireFragment : Fragment(), OnMapReadyCallback {
 
     private fun getCurrentLocation(){
         if(isPermissionGranted()){
+            if (ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return
+            }
             fusedLocationProviderClient.lastLocation.addOnCompleteListener { it ->
                 if(it.result == null){
                     return@addOnCompleteListener
                 }
                 currentLoc = it.result
+                map.isMyLocationEnabled = true
                 firePoints.sortBy {
                     val firePointLoc = Location("LocationFire")
                     firePointLoc.latitude = it.lat
@@ -112,7 +142,7 @@ class FireFragment : Fragment(), OnMapReadyCallback {
 
     private fun isPermissionGranted() : Boolean {
         return ContextCompat.checkSelfPermission(
-            context!!,
+            requireContext(),
             Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
     }
 
@@ -122,7 +152,6 @@ class FireFragment : Fragment(), OnMapReadyCallback {
         grantResults: IntArray) {
         if (requestCode == REQUEST_LOCATION_PERMISSION) {
             if (grantResults.contains(PackageManager.PERMISSION_GRANTED)) {
-                enableMyLocation()
                 getCurrentLocation()
             }
         }
@@ -130,29 +159,34 @@ class FireFragment : Fragment(), OnMapReadyCallback {
 
     private fun enableMyLocation() {
         if (isPermissionGranted()) {
+            if (ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return
+            }
+            Log.d("FireFragment", "eml")
             map.isMyLocationEnabled = true
             map.animateCamera(CameraUpdateFactory.zoomTo(20f), 2000, null)
         }
         else {
             ActivityCompat.requestPermissions(
-                activity!!,
+                requireActivity(),
                 arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                 REQUEST_LOCATION_PERMISSION
             )
         }
-    }
-
-    override fun onMapReady(p0: GoogleMap) {
-
-        map = p0
-
-        enableMyLocation()
-
-        setPoiClick(map)
-        map.uiSettings.isMyLocationButtonEnabled = false
-
-        drawFirePoints()
-        drawVolunteers()
     }
 
     private fun drawFirePoints(){

@@ -4,11 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.example.fireapplicatioin.databinding.ActivityNewsFlashBinding
-import androidx.core.app.ActivityCompat.startActivityForResult
-
-import android.content.Intent
-import android.view.MenuItem
-import kotlin.concurrent.thread
 
 
 class NewsFlashActivity : AppCompatActivity() {

@@ -1,7 +1,5 @@
 package com.example.fireapplicatioin
 
-import com.example.fireapplicatioin.model.FirePoint
-
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit

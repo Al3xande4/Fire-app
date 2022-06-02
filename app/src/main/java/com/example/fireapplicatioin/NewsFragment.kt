@@ -6,13 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fireapplicatioin.adapter.ItemAdapter
 import com.example.fireapplicatioin.databinding.FragmentNewsBinding
-import com.gauravk.bubblenavigation.BubbleNavigationConstraintView
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 
 
@@ -21,7 +18,7 @@ class NewsFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = DataBindingUtil.inflate<FragmentNewsBinding>(inflater, R.layout.fragment_news, container, false)
         val recyclerView = binding.recyclerView
         recyclerView.adapter = ItemAdapter(requireContext())
@@ -33,7 +30,7 @@ class NewsFragment : Fragment() {
     }
 }
 
-class OnScrollListener(val bottom_navigation: ChipNavigationBar): RecyclerView.OnScrollListener(){
+class OnScrollListener(private val bottom_navigation: ChipNavigationBar): RecyclerView.OnScrollListener(){
 
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         if (dy > 0 && bottom_navigation.isShown) {
@@ -43,7 +40,4 @@ class OnScrollListener(val bottom_navigation: ChipNavigationBar): RecyclerView.O
         }
     }
 
-    override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-        super.onScrollStateChanged(recyclerView, newState)
-    }
 }

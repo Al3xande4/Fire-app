@@ -1,19 +1,14 @@
 package com.example.fireapplicatioin
 
 import android.content.Intent
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.view.WindowInsets
-import android.view.WindowManager
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.fireapplicatioin.databinding.ActivityMainBinding
 
@@ -43,8 +38,8 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigation2.setOnItemSelectedListener {
             when (it) {
                 R.id.navigation_fire -> setCurrentFragment(FireFragment())
-                R.id.navigation_account -> setCurrentFragment(AcountFragment())
                 R.id.navigation_news -> setCurrentFragment(NewsFragment())
+                R.id.navigation_account -> setCurrentFragment(AccountFragment())
             }
         }
 
@@ -52,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigation3.setNavigationChangeListener { _: View, position: Int ->
             when (position) {
                 1 -> setCurrentFragment(FireFragment())
-                2 -> setCurrentFragment(AcountFragment())
+                2 -> setCurrentFragment(AccountFragment())
                 0 -> setCurrentFragment(NewsFragment())
             }
         }
