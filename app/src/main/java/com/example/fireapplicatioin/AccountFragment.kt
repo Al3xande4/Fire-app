@@ -87,7 +87,8 @@ class AccountFragment : Fragment() {
         }
         reference.child(userId!!).addListenerForSingleValueEvent(listener)
 
-        with(requireContext()).load(firebaseAuth.currentUser!!.photoUrl).into(binding.imgProfile)
+        with(requireContext()).load(firebaseAuth.currentUser!!.photoUrl)
+            .error(R.drawable.ic_acount).into(binding.imgProfile)
 
         binding.imgCamera.setOnClickListener{
             if (isStorageOk(requireContext())) {
