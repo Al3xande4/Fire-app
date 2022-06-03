@@ -29,6 +29,11 @@ import com.bumptech.glide.Glide.with
 import androidx.core.app.ActivityCompat
 import com.example.fireapplicatioin.databinding.FragmentAccountBinding
 import com.google.android.gms.tasks.Task
+import androidx.annotation.Nullable
+
+
+
+
 
 
 class AccountFragment : Fragment() {
@@ -51,11 +56,7 @@ class AccountFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = DataBindingUtil.inflate<FragmentAccountBinding>(inflater, R.layout.fragment_account, container, false)
-
-        dialog = LoadingDialog(requireActivity())
-
-        dialog.startLoading()
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_account, container, false)
 
         firebaseAuth = FirebaseAuth.getInstance()
         userpic = binding.imgCamera
@@ -63,6 +64,9 @@ class AccountFragment : Fragment() {
         cameraPermission =
             arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         storagePermission = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
+        dialog = LoadingDialog(requireActivity())
+        dialog.startLoading()
 
         val user = FirebaseAuth.getInstance().currentUser
         val reference = FirebaseDatabase.getInstance().getReference("Users")
@@ -81,8 +85,9 @@ class AccountFragment : Fragment() {
 
             }
         }
-        Log.d("AccountFragment", userId.toString())
         reference.child(userId!!).addListenerForSingleValueEvent(listener)
+
+        with(requireContext()).load(firebaseAuth.currentUser!!.photoUrl).into(binding.imgProfile)
 
         binding.imgCamera.setOnClickListener{
             if (isStorageOk(requireContext())) {
@@ -92,8 +97,10 @@ class AccountFragment : Fragment() {
             }
         }
 
+
         return binding.root
     }
+
 
     private fun isStorageOk(context: Context?): Boolean {
         return ContextCompat.checkSelfPermission(
@@ -155,8 +162,8 @@ class AccountFragment : Fragment() {
                                         databaseReference.child(it)
                                             .updateChildren(map)
                                     }
-                                    Log.d("TAG", url)
-                                    with(this).load(url)
+                                    Log.d("URL", url)
+                                    with(requireContext()).load(url)
                                         .into(
                                             binding.imgProfile
                                         )

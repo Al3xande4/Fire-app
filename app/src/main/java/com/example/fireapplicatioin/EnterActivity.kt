@@ -21,6 +21,7 @@ class EnterActivity : AppCompatActivity() {
     lateinit var binding: ActivityEnterBinding
 
     private val userKey = "User"
+    private lateinit var loadingDialog: LoadingDialog
 
     private lateinit var auth: FirebaseAuth
 
@@ -32,6 +33,8 @@ class EnterActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_enter)
 
         auth = FirebaseAuth.getInstance()
+
+        loadingDialog = LoadingDialog(this)
 
         binding.btnSignUp.setOnClickListener {
             onClickSave()
@@ -69,6 +72,7 @@ class EnterActivity : AppCompatActivity() {
             binding.edtPassword.requestFocus()
             return
         }
+        loadingDialog.startLoading()
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this){task ->
                 if (task.isSuccessful){
@@ -79,6 +83,7 @@ class EnterActivity : AppCompatActivity() {
                             auth.signInWithEmailAndPassword(email, password)
                                 .addOnCompleteListener(this){task ->
                                     if(task.isSuccessful){
+                                        loadingDialog.stopLoading()
                                         val sharedPreferences = getSharedPreferences(getPrefsName(), 0)
                                         val editor = sharedPreferences.edit()
                                         editor.putBoolean("hasLoggedIn", true)
@@ -89,14 +94,13 @@ class EnterActivity : AppCompatActivity() {
                                     }
                                 }
                         }
-
-
                 }
             }
 
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this){task ->
                 if(task.isSuccessful){
+                    loadingDialog.stopLoading()
                     val sharedPreferences = getSharedPreferences(getPrefsName(), 0)
                     val editor = sharedPreferences.edit()
                     editor.putBoolean("hasLoggedIn", true)
